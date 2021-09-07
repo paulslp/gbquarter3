@@ -1,4 +1,4 @@
-package lesson;
+package gb;
 
 
 public class Main {
