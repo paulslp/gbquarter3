@@ -2,11 +2,12 @@ package gb;
 
 public class Letter {
 
-    private final String[] letters = {"A", "B", "C"};
+    private final String[] letters;
 
     private int index;
 
-    public Letter(int index) {
+    public Letter(String[] letters, int index) {
+        this.letters = letters;
         this.index = index;
     }
 
@@ -19,6 +20,6 @@ public class Letter {
     }
 
     public void refreshIndex() {
-        index = (index < 2) ? index + 1 : 0;
+        index = (index < letters.length - 1) ? index + 1 : 0;
     }
 }
