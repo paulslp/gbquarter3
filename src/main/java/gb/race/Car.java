@@ -1,4 +1,4 @@
-package gb;
+package gb.race;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;

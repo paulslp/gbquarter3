@@ -1,4 +1,4 @@
-package gb;
+package gb.race;
 
 public class Tunnel extends Stage {
     public Tunnel() {

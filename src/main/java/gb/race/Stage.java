@@ -1,4 +1,4 @@
-package gb;
+package gb.race;
 
 public abstract class Stage {
     protected int length;

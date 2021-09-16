@@ -1,4 +1,4 @@
-package gb;
+package gb.race;
 
 import java.util.ArrayList;
 import java.util.Arrays;

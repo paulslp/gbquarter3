@@ -1,4 +1,4 @@
-package gb;
+package gb.race;
 
 public class Road extends Stage {
     public Road(int length) {
