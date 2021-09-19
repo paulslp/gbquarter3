@@ -1,13 +1,22 @@
 package gb.server;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 public class MainServer {
 
+    public static final Logger LOGGER = Logger.getLogger("");
+
     public static void main(String[] args) {
+        try {
+            LogManager.getLogManager().readConfiguration(new FileInputStream("logging.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         new Server();
     }
 
-    // 1. Разобраться с кодом
-    // 2. Сделать личные сообщения
-    // /w nick2 секрет -- пишет nick1 -- это сообщение отобразится только у nick2
 
 }

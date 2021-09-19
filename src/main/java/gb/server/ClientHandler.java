@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import static gb.server.MainServer.LOGGER;
+
 public class ClientHandler {
     private Server server;
     private Socket socket;
@@ -25,9 +27,11 @@ public class ClientHandler {
                         // /auth login1 password1
                         String[] subStrings = str.split(" ");
                         if (subStrings.length >= 3 && subStrings[0].equals("/auth")) {
+                            LOGGER.info("Авторизационные данные получены...");
                             String nickFromDB = SQLHandler.getNickByLoginAndPassword(subStrings[1], subStrings[2]);
                             if (nickFromDB != null) {
                                 sendMsg("/authok");
+                                LOGGER.info("Клиент " + nickFromDB + " подписывается на сообщения сервера");
                                 server.subscribe(this);
                                 nickname = nickFromDB;
                                 break;
@@ -37,8 +41,9 @@ public class ClientHandler {
 
                     while (true) {
                         String str = in.readUTF();
-                        System.out.println("Сообщение от клиента: " + str);
+                        LOGGER.info("Сообщение от клиента: " + str);
                         if (str.equals("/end")) {
+                            LOGGER.info("Клиент " + nickname + " инициировал свое удаление из чата");
                             break;
                         }
                         String[] subStrings = str.split(" ");
@@ -55,7 +60,7 @@ public class ClientHandler {
                         }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.severe("Ошибка обработки сообщения клиента " + nickname);
                 } finally {
                     try {
                         in.close();
@@ -76,7 +81,7 @@ public class ClientHandler {
                 }
             }).start();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.severe("Ошибка при создании входящего/исходящего потоков данных " + e.getMessage());
         }
     }
 
@@ -88,11 +93,11 @@ public class ClientHandler {
         try {
             out.writeUTF(msg);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.severe("Ошибка записи сообщения в исходящий поток " + e.getMessage());
             try {
                 out.close();
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                LOGGER.severe("Ошибка при закрытии исходящего потока " + e.getMessage());
             }
         }
     }
